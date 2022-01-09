@@ -1,28 +1,28 @@
 [
   {
     "title": "Mate",
-    "imageUrl": "",
+    "imageUrl": "./assets/mate.webp",
     "id": 1
   },
   {
     "title": "Cola",
-    "imageUrl": "",
+    "imageUrl": "./assets/cola.jpg",
     "id": 2
   },
   {
-    "title": "Lemon",
-    "imageUrl": "",
+    "title": "Others",
+    "imageUrl": "/assets/others.jpg",
     "id": 3
   },
   {
     "title": "Beers",
-    "imageUrl": "",
+    "imageUrl": "./assets/beers.jpg",
     "size": "large",
     "id": 4
   },
   {
     "title": "Non-alcoholic drinks",
-    "imageUrl": "",
+    "imageUrl": "./assets/sodas.jpg",
     "size": "large",
     "id": 5
   }
