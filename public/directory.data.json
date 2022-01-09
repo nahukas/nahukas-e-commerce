@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Mate",
+    "imageUrl": "",
+    "id": 1
+  },
+  {
+    "title": "Cola",
+    "imageUrl": "",
+    "id": 2
+  },
+  {
+    "title": "Lemon",
+    "imageUrl": "",
+    "id": 3
+  },
+  {
+    "title": "Beers",
+    "imageUrl": "",
+    "size": "large",
+    "id": 4
+  },
+  {
+    "title": "Non-alcoholic drinks",
+    "imageUrl": "",
+    "size": "large",
+    "id": 5
+  }
+]
