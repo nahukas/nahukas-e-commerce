@@ -1,17 +1,17 @@
 [
   {
-    "title": "Mate",
-    "imageUrl": "./assets/mate.webp",
+    "title": "Waters",
+    "imageUrl": "./assets/waters.png",
     "id": 1
   },
   {
-    "title": "Cola",
-    "imageUrl": "./assets/cola.jpg",
+    "title": "Sodas",
+    "imageUrl": "/assets/others.jpg",
     "id": 2
   },
   {
-    "title": "Others",
-    "imageUrl": "/assets/others.jpg",
+    "title": "Mates",
+    "imageUrl": "./assets/mate.webp",
     "id": 3
   },
   {
@@ -21,8 +21,8 @@
     "id": 4
   },
   {
-    "title": "Non-alcoholic drinks",
-    "imageUrl": "./assets/sodas.jpg",
+    "title": "Wines",
+    "imageUrl": "./assets/wines.jpeg",
     "size": "large",
     "id": 5
   }
