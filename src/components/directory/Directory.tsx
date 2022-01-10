@@ -16,7 +16,6 @@ const Directory: React.FC = () => {
           }
         });
         const responseJSON = await response.json();
-        console.log(responseJSON);
         setSections(responseJSON);
       } catch (error) {}
     };
