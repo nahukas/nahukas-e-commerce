@@ -15,7 +15,6 @@ const ShopPage: React.FC = () => {
           }
         });
         const responseJSON = await response.json();
-        console.log(responseJSON);
         setCollections(responseJSON);
       } catch (error) {}
     };
