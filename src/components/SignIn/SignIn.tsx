@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import FormButton from '../general/FormButton/FormButton';
 
+import { useAuth } from '../../context/AuthContext';
+
+import FormButton from '../general/FormButton/FormButton';
 import FormInput from '../general/FormInput/FormInput';
 
 import './sign-in.scss';
 
-const SignIn: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+interface IForm {
+  email: string;
+  password: string;
+}
+
+const formDefaultValues = { email: '', password: '' };
+
+const SignIn = () => {
+  const { handleSignInWithGoogle } = useAuth();
+  const [form, setForm] = useState<IForm>(formDefaultValues);
+  const { email, password } = form;
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -19,16 +29,11 @@ const SignIn: React.FC = () => {
       target: { name, value }
     } = e;
 
-    if (name === 'email') {
-      setEmail(value);
-    } else if (name === 'password') {
-      setPassword(value);
-    }
+    setForm({ ...form, [name]: value });
   };
 
   const clearFrom = () => {
-    setEmail('');
-    setPassword('');
+    setForm(formDefaultValues);
   };
 
   return (
@@ -55,6 +60,9 @@ const SignIn: React.FC = () => {
         />
         <FormButton type='submit'>Sign In</FormButton>
       </form>
+      <FormButton onClick={handleSignInWithGoogle} isGoogleSignIn>
+        Sign In With Google
+      </FormButton>
     </div>
   );
 };
