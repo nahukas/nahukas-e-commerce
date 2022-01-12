@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-
 import { User } from 'firebase/auth';
+
+import { IUser } from '../api/Users/models';
 import { auth, signInWithGoogle } from '../api/firebase.utils';
+import { UserService } from '../api/Users/UserService';
 
 interface AuthContextType {
-  user: User | null;
+  user: IUser | null;
   handleSignInWithGoogle: () => void;
   signOut: () => void;
 }
@@ -12,11 +14,24 @@ interface AuthContextType {
 const AuthContext = React.createContext<AuthContextType>(null!);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [currentUser, setCurrentUser] = React.useState<User | null>(null);
+  const [currentUser, setCurrentUser] = React.useState<IUser | null>(null);
 
   useEffect(() => {
+    const fetchUserInfo = async (user: User) => {
+      try {
+        const response = await UserService.storeUser(user);
+        setCurrentUser(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+      if (user) {
+        fetchUserInfo(user);
+      } else {
+        setCurrentUser(null);
+      }
     });
   }, []);
 
