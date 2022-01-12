@@ -1,5 +1,7 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 
+import { auth } from '../../api/firebase.utils';
 import { useAuth } from '../../context/AuthContext';
 
 import FormButton from '../general/FormButton/FormButton';
@@ -19,9 +21,16 @@ const SignIn = () => {
   const [form, setForm] = useState<IForm>(formDefaultValues);
   const { email, password } = form;
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    const { email, password } = form;
     e.preventDefault();
-    clearFrom();
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      clearFrom();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSetField = (e: React.ChangeEvent<HTMLInputElement>) => {
