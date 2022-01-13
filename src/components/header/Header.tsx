@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../asset/crown.svg';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/cart/CartContext';
 import CartDropdown from '../CartDropdown/CartDropDown';
 import CartIcon from '../CartIcon/CartIcon';
 
@@ -27,6 +28,8 @@ const AuthStatus = () => {
 };
 
 const Header: React.FC = () => {
+  const { cartState } = useCart();
+
   return (
     <div className='header'>
       <Link className='logo-container' to='/'>
@@ -42,7 +45,7 @@ const Header: React.FC = () => {
         <AuthStatus />
         <CartIcon />
       </div>
-      <CartDropdown />
+      {!cartState.hidden && <CartDropdown />}
     </div>
   );
 };

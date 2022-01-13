@@ -4,7 +4,7 @@ import { User } from 'firebase/auth';
 import { IUser } from '../api/Users/models';
 import { auth, signInWithGoogle } from '../api/firebase.utils';
 import { UserService } from '../api/Users/UserService';
-import { userReducer } from './actions/user.reducer';
+import { userReducer } from './user/user.reducer';
 import { Product } from '../api/Product/products.models';
 
 interface AuthContextType {
