@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../asset/crown.svg';
 import { useAuth } from '../../context/AuthContext';
+import CartDropdown from '../CartDropdown/CartDropDown';
+import CartIcon from '../CartIcon/CartIcon';
 
 import './header.styles.scss';
 
@@ -24,22 +26,25 @@ const AuthStatus = () => {
   );
 };
 
-const Header: React.FC = () => (
-  <div className='header'>
-    <Link className='logo-container' to='/'>
-      <Logo className='logo' />
-      <span>Nahukas</span>
-    </Link>
-    <div className='options'>
-      <Link className='option' to='/shop'>
-        SHOP
+const Header: React.FC = () => {
+  return (
+    <div className='header'>
+      <Link className='logo-container' to='/'>
+        <Logo className='logo' />
       </Link>
-      <Link className='option' to='/contact'>
-        CONTACT
-      </Link>
-      <AuthStatus />
+      <div className='options'>
+        <Link className='option' to='/shop'>
+          SHOP
+        </Link>
+        <Link className='option' to='/contact'>
+          CONTACT
+        </Link>
+        <AuthStatus />
+        <CartIcon />
+      </div>
+      <CartDropdown />
     </div>
-  </div>
-);
+  );
+};
 
 export default Header;
