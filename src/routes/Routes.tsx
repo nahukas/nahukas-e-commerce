@@ -5,6 +5,7 @@ import CartProvider from '../context/cart/CartContext';
 import { PublicAuth, RequireAuth } from '../layout/auth';
 
 import Layout from '../layout/Layout';
+import CheckoutPage from '../pages/Checkout/Checkout';
 import HomePage from '../pages/HomePage/HomePage';
 import ShopPage from '../pages/ShopPage/ShopPage';
 import SignInSignUpPage from '../pages/SignInSignUpPage/SignInSignUpPage';
@@ -23,6 +24,14 @@ const RoutesComponent = () => {
                 element={
                   <RequireAuth>
                     <ShopPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path='/checkout'
+                element={
+                  <RequireAuth>
+                    <CheckoutPage />
                   </RequireAuth>
                 }
               />
