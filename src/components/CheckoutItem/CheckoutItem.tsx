@@ -1,25 +1,47 @@
 import React from 'react';
 
-import { ProductQty } from '../../api/Product/products.models';
+import { Product, ProductQty } from '../../api/Product/products.models';
+import { useCart } from '../../context/cart/CartContext';
 
 import './checkout-item.scss';
 
 interface CheckoutItemProps {
-  cartItem: ProductQty;
+  item: ProductQty;
 }
 
-const CheckoutItem: React.FC<CheckoutItemProps> = ({
-  cartItem: { imageUrl, name, qty, price }
-}) => (
-  <div className='checkout-item'>
-    <div className='image-container'>
-      <img src={imageUrl} alt='item' />
+const CheckoutItem: React.FC<CheckoutItemProps> = ({ item }) => {
+  const { imageUrl, name, qty, price } = item;
+  const { clearItems, addItem, removeItem } = useCart();
+
+  return (
+    <div className='checkout-item'>
+      <div className='image-container'>
+        <img src={imageUrl} alt='item' />
+      </div>
+      <span className='name'>{name}</span>
+      <span className='quantity'>
+        <div
+          className='arrow'
+          onClick={() =>
+            qty === 1 ? clearItems(item as Product) : removeItem(item)
+          }
+        >
+          &#10094;
+        </div>
+        <span className='value'>{qty}</span>
+        <div className='arrow' onClick={() => addItem(item as Product)}>
+          &#10095;
+        </div>
+      </span>
+      <span className='price'>&#8364; {price}</span>
+      <div
+        className='remove-button'
+        onClick={() => clearItems(item as Product)}
+      >
+        &#10005;
+      </div>
     </div>
-    <span className='name'>{name}</span>
-    <span className='quantity'>{qty}</span>
-    <span className='price'>{price}</span>
-    <div className='remove-button'>&#10005;</div>
-  </div>
-);
+  );
+};
 
 export default CheckoutItem;

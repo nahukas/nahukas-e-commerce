@@ -10,6 +10,8 @@ interface CartContextType {
   cartState: { hidden: boolean; cartItems: ProductQty[] };
   toggleCart: () => void;
   addItem: (itemToAdd: Product) => void;
+  removeItem: (itemToRemove: ProductQty) => void;
+  clearItems: (itemToRemove: Product) => void;
 }
 
 const CartContext = React.createContext<CartContextType>(null!);
@@ -63,10 +65,38 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const removeItem = async (itemToRemove: ProductQty) => {
+    dispatch({
+      type: cartActionTypes.REMOVE_ITEM,
+      payload: itemToRemove
+    });
+
+    try {
+      await UserService.removeProduct(userState.uid, itemToRemove);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const clearItems = async (itemToRemove: Product) => {
+    dispatch({
+      type: cartActionTypes.CLEAR_ITEMS,
+      payload: itemToRemove
+    });
+
+    try {
+      await UserService.clearProduct(userState.uid, itemToRemove);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const value = {
     toggleCart,
     cartState,
-    addItem
+    addItem,
+    removeItem,
+    clearItems
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
