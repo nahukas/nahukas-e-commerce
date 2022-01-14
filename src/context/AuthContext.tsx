@@ -1,26 +1,23 @@
 import React, { useEffect, useReducer } from 'react';
 import { User } from 'firebase/auth';
 
-import { IUser } from '../api/Users/models';
+import { IUser } from '../api/Users/user.models';
 import { auth, signInWithGoogle } from '../api/firebase.utils';
 import { UserService } from '../api/Users/UserService';
 import { userReducer } from './user/user.reducer';
-import { Product } from '../api/Product/products.models';
 
 interface AuthContextType {
   user: IUser | null;
+  userState: IUser;
   handleSignInWithGoogle: () => void;
   signOut: () => void;
-  addProduct: (newProduct: Product) => void;
-  userState: IUser;
 }
 
 const initialState: IUser = {
   displayName: '',
   uid: '',
   email: '',
-  createdAt: '',
-  products: []
+  createdAt: ''
 };
 
 const AuthContext = React.createContext<AuthContextType>(null!);
@@ -74,27 +71,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await auth.signOut();
   };
 
-  const addProduct = async (newProduct: Product) => {
-    const addProduct = (newProduct: Product) => {
-      dispatch({
-        type: 'ADD_PRODUCT',
-        payload: newProduct
-      });
-    };
-
-    try {
-      addProduct(newProduct);
-      await UserService.addProduct(currentUser!.uid, newProduct.id, newProduct);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const value = {
     user: currentUser,
     handleSignInWithGoogle,
     signOut,
-    addProduct,
     userState
   };
 

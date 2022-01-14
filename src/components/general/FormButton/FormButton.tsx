@@ -6,16 +6,20 @@ interface FormButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
   onClick?: () => void;
   isGoogleSignIn?: boolean;
+  inverted?: boolean;
 }
 
 const FormButton: React.FC<FormButtonProps> = ({
   children,
   type,
   onClick,
-  isGoogleSignIn
+  isGoogleSignIn,
+  inverted
 }) => (
   <button
-    className={`${isGoogleSignIn ? 'google-sign-in' : ''} custom-button`}
+    className={`${inverted ? 'inverted' : ''} ${
+      isGoogleSignIn ? 'google-sign-in' : ''
+    } custom-button`}
     type={type}
     onClick={onClick}
   >
