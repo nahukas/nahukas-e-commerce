@@ -10,9 +10,10 @@ const CartIcon: React.FC = () => {
   const { toggleCart, cartState } = useCart();
 
   const cartQtyProducts = cartState.cartItems.length
-    ? cartState.cartItems
-        .map((product: ProductQty) => product.qty)
-        .reduce((prev: number, next: number) => prev + next)
+    ? cartState.cartItems.reduce(
+        (prev: number, cartItem: ProductQty) => prev + cartItem.qty,
+        0
+      )
     : 0;
 
   return (
