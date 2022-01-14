@@ -5,31 +5,31 @@
     "routeName": "waters",
     "items": [
       {
-        "id": 1,
+        "id": "1",
         "name": "San Pellegrino Sparkling Natural Mineral Water Glass 750ml",
         "imageUrl": "/assets/waters/sanPellegrino.jpeg",
         "price": 4.9
       },
       {
-        "id": 2,
+        "id": "2",
         "name": "Perrier Sparkling Natural Mineral Water Glass 750ml",
         "imageUrl": "/assets/waters/perrier.jpeg",
         "price": 4.9
       },
       {
-        "id": 3,
+        "id": "3",
         "name": "Topo Chico Sparkling Natural Mineral Water Glass 750ml",
         "imageUrl": "/assets/waters/topoChico.jpeg",
         "price": 4.3
       },
       {
-        "id": 4,
+        "id": "4",
         "name": "Acqua Panna Still Natural Mineral Water Glass 750ml",
         "imageUrl": "/assets/waters/acquaPana.jpeg",
         "price": 4.9
       },
       {
-        "id": 5,
+        "id": "5",
         "name": "Evian Sparkling Natural Mineral Water Glass 750ml",
         "imageUrl": "/assets/waters/evian.jpeg",
         "price": 4.2
@@ -42,31 +42,31 @@
     "routeName": "sodas",
     "items": [
       {
-        "id": 1,
+        "id": "6",
         "name": "Coca Cola Original 330ml Glass Bottle",
         "imageUrl": "/assets/sodas/cocaCola.jpeg",
         "price": 1.2
       },
       {
-        "id": 2,
+        "id": "7",
         "name": "Pepsi Original 330ml Glass Bottle",
         "imageUrl": "/assets/sodas/pepsi.jpeg",
         "price": 1.1
       },
       {
-        "id": 3,
+        "id": "8",
         "name": "Fritz-Kola 500ml Glass Bottle",
         "imageUrl": "/assets/sodas/fritzKola.png",
         "price": 0.95
       },
       {
-        "id": 4,
+        "id": "9",
         "name": "Fanta 330ml Glass Bottle",
         "imageUrl": "/assets/sodas/fanta.png",
         "price": 1.1
       },
       {
-        "id": 5,
+        "id": "10",
         "name": "Bundaberg Ginger Brew 330ml",
         "imageUrl": "/assets/sodas/bundaberg.png",
         "price": 160
@@ -79,31 +79,31 @@
     "routeName": "mates",
     "items": [
       {
-        "id": 1,
+        "id": "11",
         "name": "Club Mate 500ml",
         "imageUrl": "/assets/mates/clubMate.png",
         "price": 0.95
       },
       {
-        "id": 2,
+        "id": "12",
         "name": "Club Mate Granat 500ml",
         "imageUrl": "/assets/mates/mateGranat.jpeg",
         "price": 0.95
       },
       {
-        "id": 3,
+        "id": "13",
         "name": "Mio Mio Mate 500ml",
         "imageUrl": "/assets/mates/mioMioMate.png",
         "price": 1.1
       },
       {
-        "id": 4,
+        "id": "14",
         "name": "Chari Tea Mate 330ml Glass Bottle",
         "imageUrl": "/assets/mates/chariTeaMate.png",
         "price": 1.65
       },
       {
-        "id": 5,
+        "id": "15",
         "name": "Bionade Mate",
         "imageUrl": "/assets/mates/bionadeMate.png",
         "price": 1.15
@@ -116,43 +116,43 @@
     "routeName": "beers",
     "items": [
       {
-        "id": 1,
+        "id": "16",
         "name": "Paulaner Hefe-Weißbier 500ml",
         "imageUrl": "/assets/beers/paulanerHefeWeissbier.png",
         "price": 0.9
       },
       {
-        "id": 2,
+        "id": "17",
         "name": "Maisel's Weiße 500ml",
         "imageUrl": "/assets/beers/maiselWeisse.png",
         "price": 0.9
       },
       {
-        "id": 3,
+        "id": "18",
         "name": "Jever Pilsener 500ml",
         "imageUrl": "/assets/beers/jever.png",
         "price": 0.89
       },
       {
-        "id": 4,
+        "id": "19",
         "name": "Carlsberg",
         "imageUrl": "/assets/beers/carlsberg.png",
         "price": 0.89
       },
       {
-        "id": 5,
+        "id": "20",
         "name": "Budweiser Budvar Premium Lagerbier 500ml",
         "imageUrl": "/assets/beers/budweiser.png",
         "price": 0.89
       },
       {
-        "id": 6,
+        "id": "21",
         "name": "Beck's Pils 500ml",
         "imageUrl": "/assets/beers/becks.png",
         "price": 1.05
       },
       {
-        "id": 7,
+        "id": "22",
         "name": "Leffe Blonde 330ml",
         "imageUrl": "/assets/beers/leffe.png",
         "price": 20
@@ -165,37 +165,37 @@
     "routeName": "wines",
     "items": [
       {
-        "id": 1,
+        "id": "23",
         "name": "Trapiche Redwine Malbec dry 750ml",
         "imageUrl": "/assets/wines/trapiche.png",
         "price": 4.99
       },
       {
-        "id": 2,
+        "id": "24",
         "name": "Freixenet Rotwein Mederaño Tinto half-dry ",
         "imageUrl": "/assets/wines/medrano.png",
         "price": 3.99
       },
       {
-        "id": 3,
+        "id": "25",
         "name": "Blanchet white wine Blanc de Blancs dry 750ml",
         "imageUrl": "/assets/wines/blanchet.png",
         "price": 2.99
       },
       {
-        "id": 4,
+        "id": "26",
         "name": "Biorebe red wine Tempranillo Spanien dry 750ml",
         "imageUrl": "/assets/wines/biorebe.png",
         "price": 4.79
       },
       {
-        "id": 5,
+        "id": "27",
         "name": "Gallo Family Rosé Grenache lieblich 750ml",
         "imageUrl": "/assets/wines/gallo.png",
         "price": 4.99
       },
       {
-        "id": 6,
+        "id": "28",
         "name": "Cavit Trento white wine Chardonnay Trentino DOC dry 750ml",
         "imageUrl": "/assets/wines/cavit.png",
         "price": 5.15

@@ -1,5 +1,5 @@
 import { Product } from '../../api/Product/products.models';
-import { IUser } from '../../api/Users/models';
+import { IUser } from '../../api/Users/user.models';
 
 interface Action_GET_USER {
   type: 'GET_USER';

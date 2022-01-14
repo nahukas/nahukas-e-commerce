@@ -1,9 +1,16 @@
 import { User } from 'firebase/auth';
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc
+} from 'firebase/firestore';
 
-import { IUser } from './models';
+import { IUser } from './user.models';
 import { firestore } from '../firebase.utils';
-import { Product } from '../Product/products.models';
+import { ProductQty } from '../Product/products.models';
 
 export class UserService {
   public static async storeUser({
@@ -12,10 +19,8 @@ export class UserService {
     email
   }: User): Promise<IUser> {
     const userDocReference = doc(firestore, 'users', uid);
-    const userCartReference = collection(firestore, 'users', uid, 'products');
 
     const userSnapShot = await getDoc(userDocReference);
-    const userCartSnapShot = await getDocs(userCartReference);
 
     if (!userSnapShot.exists()) {
       try {
@@ -33,16 +38,7 @@ export class UserService {
       }
     }
 
-    const products: Product[] = [];
-
-    userCartSnapShot.forEach((snapshot) => {
-      products.push(snapshot.data() as Product);
-    });
-
-    let userWithCart = userSnapShot.data() as IUser;
-    userWithCart = { ...userWithCart, products };
-
-    return userWithCart;
+    return userSnapShot.data() as IUser;
   }
 
   public static async updateUserInfo(uid: string, user: IUser): Promise<IUser> {
@@ -54,40 +50,43 @@ export class UserService {
 
   public static async getUser(uid: string): Promise<IUser> {
     const userDocReference = doc(firestore, 'users', uid);
-    const userCartReference = collection(firestore, 'users', uid, 'products');
 
     const userSnapShot = await getDoc(userDocReference);
-    const userCartSnapShot = await getDocs(userCartReference);
 
-    const products: Product[] = [];
-
-    userCartSnapShot.forEach((snapshot) => {
-      products.push(snapshot.data() as Product);
-    });
-
-    let userWithCart = userSnapShot.data() as IUser;
-    userWithCart = { ...userWithCart, products };
-
-    return userWithCart;
+    return userSnapShot.data() as IUser;
   }
 
   public static async addProduct(
     uid: string,
-    productId: string,
-    product: Product
-  ): Promise<Product> {
-    const userDocReference = doc(firestore, 'users', uid);
+    product: ProductQty
+  ): Promise<void> {
     const userCartReference = doc(
       firestore,
       'users',
       uid,
       'products',
-      productId
+      product.id
     );
+    const userCartSnapShot = await getDoc(userCartReference);
 
-    await setDoc(userCartReference, product);
-    const cartProductSnapShot = await getDoc(userDocReference);
+    if (!userCartSnapShot.exists()) {
+      await setDoc(userCartReference, product);
+    } else {
+      const existingCartItem = userCartSnapShot.data() as ProductQty;
+      await updateDoc(userCartReference, { qty: existingCartItem.qty + 1 });
+    }
+  }
 
-    return cartProductSnapShot.data() as Product;
+  public static async getUserCartItems(uid: string): Promise<ProductQty[]> {
+    const userCartReference = collection(firestore, 'users', uid, 'products');
+    const userCartSnapShot = await getDocs(userCartReference);
+
+    const cartItems: ProductQty[] = [];
+
+    userCartSnapShot.forEach((snapshot) => {
+      cartItems.push(snapshot.data() as ProductQty);
+    });
+
+    return cartItems;
   }
 }

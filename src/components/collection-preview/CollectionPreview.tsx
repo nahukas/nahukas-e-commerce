@@ -1,20 +1,15 @@
 import React from 'react';
+
+import { Product } from '../../api/Product/products.models';
 import CollectionItem from '../collection-item/CollectionItem';
 
 import './collectionPreview.styles.scss';
-
-export interface Item {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-}
 
 interface CollectionPreviewProps {
   id: number;
   routeName: string;
   title: string;
-  items: Item[];
+  items: Product[];
 }
 
 const CollectionPreview: React.FC<CollectionPreviewProps> = ({
@@ -26,14 +21,8 @@ const CollectionPreview: React.FC<CollectionPreviewProps> = ({
     <div className='preview'>
       {items
         .filter((item, idx) => idx < 4)
-        .map(({ id, name, imageUrl, price }) => (
-          <CollectionItem
-            key={id}
-            id={id}
-            name={name}
-            imageUrl={imageUrl}
-            price={price}
-          />
+        .map((item) => (
+          <CollectionItem key={item.id} item={item} />
         ))}
     </div>
   </div>

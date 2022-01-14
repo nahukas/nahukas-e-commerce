@@ -1,19 +1,17 @@
 import React from 'react';
 
 import { ReactComponent as ShoppingIcon } from '../../asset/shopping-bag.svg';
-import { Product } from '../../api/Product/products.models';
-import { useAuth } from '../../context/AuthContext';
+import { ProductQty } from '../../api/Product/products.models';
 import { useCart } from '../../context/cart/CartContext';
 
 import './cart-icon.scss';
 
 const CartIcon: React.FC = () => {
-  const { userState } = useAuth();
-  const { toggleCart } = useCart();
+  const { toggleCart, cartState } = useCart();
 
-  const cartQtyProducts = userState.products.length
-    ? userState.products
-        .map((product: Product) => product.qty)
+  const cartQtyProducts = cartState.cartItems.length
+    ? cartState.cartItems
+        .map((product: ProductQty) => product.qty)
         .reduce((prev: number, next: number) => prev + next)
     : 0;
 
