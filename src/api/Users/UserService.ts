@@ -1,6 +1,7 @@
 import { User } from 'firebase/auth';
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -10,7 +11,7 @@ import {
 
 import { IUser } from './user.models';
 import { firestore } from '../firebase.utils';
-import { ProductQty } from '../Product/products.models';
+import { Product, ProductQty } from '../Product/products.models';
 
 export class UserService {
   public static async storeUser({
@@ -75,6 +76,42 @@ export class UserService {
       const existingCartItem = userCartSnapShot.data() as ProductQty;
       await updateDoc(userCartReference, { qty: existingCartItem.qty + 1 });
     }
+  }
+
+  public static async removeProduct(
+    uid: string,
+    product: ProductQty
+  ): Promise<void> {
+    const userCartReference = doc(
+      firestore,
+      'users',
+      uid,
+      'products',
+      product.id
+    );
+    const userCartSnapShot = await getDoc(userCartReference);
+
+    if (!userCartSnapShot.exists()) {
+      await setDoc(userCartReference, product);
+    } else {
+      const existingCartItem = userCartSnapShot.data() as ProductQty;
+      await updateDoc(userCartReference, { qty: existingCartItem.qty - 1 });
+    }
+  }
+
+  public static async clearProduct(
+    uid: string,
+    product: Product
+  ): Promise<void> {
+    const userCartReference = doc(
+      firestore,
+      'users',
+      uid,
+      'products',
+      product.id
+    );
+
+    await deleteDoc(userCartReference);
   }
 
   public static async getUserCartItems(uid: string): Promise<ProductQty[]> {

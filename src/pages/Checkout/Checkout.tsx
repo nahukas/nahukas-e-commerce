@@ -39,10 +39,10 @@ const CheckoutPage: React.FC = () => {
         </div>
       </div>
       {cartItems.map((cartItem: ProductQty) => (
-        <CheckoutItem cartItem={cartItem} />
+        <CheckoutItem key={cartItem.id} item={cartItem} />
       ))}
       <div className='total'>
-        <span>TOTAL: €{totalCart}</span>
+        <span>TOTAL: €{totalCart.toFixed(2)}</span>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { ProductQty } from '../../api/Product/products.models';
 import { cartAction } from './cart.actions';
 import { cartActionTypes } from './cart.types';
-import { addItemToCart } from './cart.utils';
+import { addItemToCart, removeItemFromCart } from './cart.utils';
 
 interface I_CART_INITIAL_STATE {
   hidden: boolean;
@@ -27,6 +27,18 @@ const cartReducer = (
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload)
+      };
+    case cartActionTypes.REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: removeItemFromCart(state.cartItems, action.payload)
+      };
+    case cartActionTypes.CLEAR_ITEMS:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(
+          (cartItem) => cartItem.id !== action.payload.id
+        )
       };
     case cartActionTypes.SET_ITEMS:
       return { ...state, cartItems: action.payload };
