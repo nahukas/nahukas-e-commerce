@@ -3,8 +3,12 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  let { user } = useAuth();
+  let { user, loading } = useAuth();
   let location = useLocation();
+
+  if (loading) {
+    return <h1>Loading..</h1>;
+  }
 
   if (!user) {
     return (
@@ -16,8 +20,12 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
 };
 
 export const PublicAuth = ({ children }: { children: JSX.Element }) => {
-  let { user } = useAuth();
+  let { user, loading } = useAuth();
   let location = useLocation();
+
+  if (loading) {
+    return <h1>Loading..</h1>;
+  }
 
   if (user) {
     return <Navigate to='/' state={{ from: location }} replace />;

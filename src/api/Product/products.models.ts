@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   imageUrl: string;
   price: number;
+  category: string;
 }
 
 export interface ProductQty extends Product {

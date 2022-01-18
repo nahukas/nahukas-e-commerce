@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { User } from 'firebase/auth';
 
 import { IUser } from '../api/Users/user.models';
@@ -11,6 +11,7 @@ interface AuthContextType {
   userState: IUser;
   handleSignInWithGoogle: () => void;
   signOut: () => void;
+  loading: boolean;
 }
 
 const initialState: IUser = {
@@ -25,14 +26,18 @@ const AuthContext = React.createContext<AuthContextType>(null!);
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = React.useState<IUser | null>(null);
   const [userState, dispatch] = useReducer(userReducer, initialState);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchUserInfo = async (user: User) => {
+      setLoading(true);
       try {
         const response = await UserService.storeUser(user);
         setCurrentUser(response);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
 
       try {
@@ -75,7 +80,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     user: currentUser,
     handleSignInWithGoogle,
     signOut,
-    userState
+    userState,
+    loading
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
 import { Product, ProductQty } from '../../api/Product/products.models';
 import { UserService } from '../../api/Users/UserService';
@@ -12,16 +12,19 @@ interface CartContextType {
   addItem: (itemToAdd: Product) => void;
   removeItem: (itemToRemove: ProductQty) => void;
   clearItems: (itemToRemove: Product) => void;
+  loadingCart: boolean;
 }
 
 const CartContext = React.createContext<CartContextType>(null!);
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const { userState } = useAuth();
+  const [loadingCart, setLoadingCart] = useState(true);
   const [cartState, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
 
   useEffect(() => {
     const fetchCart = async () => {
+      setLoadingCart(true);
       if (userState.uid) {
         try {
           const response = await UserService.getUserCartItems(userState.uid);
@@ -38,6 +41,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
           payload: []
         });
       }
+      setLoadingCart(false);
     };
 
     fetchCart();
@@ -96,7 +100,8 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     cartState,
     addItem,
     removeItem,
-    clearItems
+    clearItems,
+    loadingCart
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
