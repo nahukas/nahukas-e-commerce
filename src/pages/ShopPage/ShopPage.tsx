@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { IDirectory } from '../../api/Directory/directory.models';
+import { DirectoryService } from '../../api/Directory/DirectoryService';
 import { Product } from '../../api/Product/products.models';
+import { ProductService } from '../../api/Product/ProductsService';
 import CollectionPreview from '../../components/collection-preview/CollectionPreview';
 
 export interface Collection extends IDirectory {
@@ -14,19 +16,27 @@ const ShopPage: React.FC = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const response = await fetch('collections.data.json', {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        });
-        const responseJSON = await response.json();
-        setCollections(responseJSON);
-      } catch (error) {}
+      return await ProductService.getProducts();
     };
 
-    fetchProducts();
+    const fetchDirectory = async () => {
+      const products = await fetchProducts();
+
+      if (products) {
+        const directory =
+          (await DirectoryService.getDirectory()) as Collection[];
+        directory.forEach((directory) => {
+          const filteredProducts = products.filter(
+            (product) =>
+              product.category.toLowerCase() === directory.title.toLowerCase()
+          );
+          directory.items = filteredProducts;
+        });
+        setCollections(directory);
+      }
+    };
+
+    fetchDirectory();
   }, []);
 
   return (
