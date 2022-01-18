@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
+import { IDirectory } from '../../api/Directory/directory.models';
+import { Product } from '../../api/Product/products.models';
 import CollectionPreview from '../../components/collection-preview/CollectionPreview';
 
+export interface Collection extends IDirectory {
+  items: Product[];
+  routeName: string;
+}
+
 const ShopPage: React.FC = () => {
-  const [collections, setCollections] = useState([]);
+  const [collections, setCollections] = useState<Collection[]>([]);
 
   useEffect(() => {
-    const fetchDirectory = async () => {
+    const fetchProducts = async () => {
       try {
         const response = await fetch('collections.data.json', {
           headers: {
@@ -19,7 +26,7 @@ const ShopPage: React.FC = () => {
       } catch (error) {}
     };
 
-    fetchDirectory();
+    fetchProducts();
   }, []);
 
   return (

@@ -8,6 +8,7 @@ import './checkout.scss';
 
 const CheckoutPage: React.FC = () => {
   const {
+    loadingCart,
     cartState: { cartItems }
   } = useCart();
 
@@ -18,6 +19,10 @@ const CheckoutPage: React.FC = () => {
         0
       )
     : 0;
+
+  if (loadingCart) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div className='checkout-page'>

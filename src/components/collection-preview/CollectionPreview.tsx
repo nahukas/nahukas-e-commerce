@@ -6,7 +6,7 @@ import CollectionItem from '../collection-item/CollectionItem';
 import './collectionPreview.styles.scss';
 
 interface CollectionPreviewProps {
-  id: number;
+  id: string;
   routeName: string;
   title: string;
   items: Product[];

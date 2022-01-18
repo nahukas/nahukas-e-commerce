@@ -1,7 +1,7 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
 import { firestore } from '../firebase.utils';
-import { Product } from './products.models';
+import { Product, ProductWithCategory } from './products.models';
 
 export class ProductService {
   public static async getProducts(): Promise<Product[]> {
@@ -15,5 +15,11 @@ export class ProductService {
     });
 
     return products;
+  }
+
+  public static async addProducts(product: ProductWithCategory) {
+    const userCartReference = doc(firestore, 'products', product.id.toString());
+
+    await setDoc(userCartReference, product);
   }
 }
