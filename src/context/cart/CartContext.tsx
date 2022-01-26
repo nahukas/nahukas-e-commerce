@@ -16,6 +16,7 @@ interface CartContextType {
 }
 
 const CartContext = React.createContext<CartContextType>(null!);
+CartContext.displayName = 'CartContext';
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const { userState } = useAuth();
