@@ -11,7 +11,8 @@ import {
 
 import { IUser } from './user.models';
 import { firestore } from '../firebase.utils';
-import { Product, ProductQty } from '../Product/products.models';
+import { Product } from '../Product/products.models';
+import { CartItemType, CartState } from '../../context/cart/cart.reducer';
 
 export class UserService {
   public static async storeUser({
@@ -59,7 +60,8 @@ export class UserService {
 
   public static async addProduct(
     uid: string,
-    product: ProductQty
+    product: Product,
+    quantity = 1
   ): Promise<void> {
     const userCartReference = doc(
       firestore,
@@ -71,16 +73,20 @@ export class UserService {
     const userCartSnapShot = await getDoc(userCartReference);
 
     if (!userCartSnapShot.exists()) {
-      await setDoc(userCartReference, product);
+      const item: CartItemType = product as CartItemType;
+      item.quantity = quantity;
+      await setDoc(userCartReference, item);
     } else {
-      const existingCartItem = userCartSnapShot.data() as ProductQty;
-      await updateDoc(userCartReference, { qty: existingCartItem.qty + 1 });
+      const existingCartItem = userCartSnapShot.data() as CartItemType;
+      await updateDoc(userCartReference, {
+        quantity: existingCartItem.quantity + 1
+      });
     }
   }
 
   public static async removeProduct(
     uid: string,
-    product: ProductQty
+    product: CartItemType
   ): Promise<void> {
     const userCartReference = doc(
       firestore,
@@ -94,8 +100,10 @@ export class UserService {
     if (!userCartSnapShot.exists()) {
       await setDoc(userCartReference, product);
     } else {
-      const existingCartItem = userCartSnapShot.data() as ProductQty;
-      await updateDoc(userCartReference, { qty: existingCartItem.qty - 1 });
+      const existingCartItem = userCartSnapShot.data() as CartItemType;
+      await updateDoc(userCartReference, {
+        quantity: existingCartItem.quantity - 1
+      });
     }
   }
 
@@ -114,16 +122,17 @@ export class UserService {
     await deleteDoc(userCartReference);
   }
 
-  public static async getUserCartItems(uid: string): Promise<ProductQty[]> {
+  public static async getUserCartItems(uid: string): Promise<CartState> {
     const userCartReference = collection(firestore, 'users', uid, 'products');
     const userCartSnapShot = await getDocs(userCartReference);
 
-    const cartItems: ProductQty[] = [];
+    const cartItemsObject: CartState = {};
 
     userCartSnapShot.forEach((snapshot) => {
-      cartItems.push(snapshot.data() as ProductQty);
+      const item = snapshot.data() as CartItemType;
+      cartItemsObject[item.id] = item;
     });
 
-    return cartItems;
+    return cartItemsObject;
   }
 }

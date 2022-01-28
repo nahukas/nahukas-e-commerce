@@ -8,12 +8,13 @@ import FormButton from '../general/FormButton/FormButton';
 
 import './cart-dropdown.scss';
 
-const CartDropdown: React.FC = () => {
-  const {
-    cartState: { cartItems }
-  } = useCart();
+interface CartDropdownProps {
+  toggleCart: () => void;
+}
+
+const CartDropdown: React.FC<CartDropdownProps> = ({ toggleCart }) => {
+  const { items, count } = useCart();
   const navigate = useNavigate();
-  const { toggleCart } = useCart();
 
   const handleGoToCheckoutClick = () => {
     toggleCart();
@@ -23,8 +24,8 @@ const CartDropdown: React.FC = () => {
   return (
     <div className='cart-dropdown'>
       <div className='cart-items'>
-        {cartItems.length ? (
-          cartItems.map((cartItem) => (
+        {count ? (
+          items.map((cartItem) => (
             <CartItem key={cartItem.id} item={cartItem} />
           ))
         ) : (

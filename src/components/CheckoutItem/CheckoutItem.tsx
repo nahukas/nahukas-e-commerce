@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { Product, ProductQty } from '../../api/Product/products.models';
-import { useCart } from '../../context/cart/CartContext';
+import { useAuth } from '../../context/AuthContext';
+import { CartItemType } from '../../context/cart/cart.reducer';
+import { useCartMutations } from '../../context/cart/CartContext';
 
 import './checkout-item.scss';
 
 interface CheckoutItemProps {
-  item: ProductQty;
+  item: CartItemType;
 }
 
 const CheckoutItem: React.FC<CheckoutItemProps> = ({ item }) => {
-  const { imageUrl, name, qty, price } = item;
-  const { clearItems, addItem, removeItem } = useCart();
+  const { imageUrl, name, quantity, price } = item;
+  const { addToCart, removeFromCart, clearItemsFromCart } = useCartMutations();
+  const { user } = useAuth();
 
   return (
     <div className='checkout-item'>
@@ -23,20 +25,22 @@ const CheckoutItem: React.FC<CheckoutItemProps> = ({ item }) => {
         <div
           className='arrow'
           onClick={() =>
-            qty === 1 ? clearItems(item as Product) : removeItem(item)
+            quantity === 1
+              ? clearItemsFromCart(item, user?.uid)
+              : removeFromCart(item, user?.uid)
           }
         >
           &#10094;
         </div>
-        <span className='value'>{qty}</span>
-        <div className='arrow' onClick={() => addItem(item as Product)}>
+        <span className='value'>{quantity}</span>
+        <div className='arrow' onClick={() => addToCart(item, 1, user?.uid)}>
           &#10095;
         </div>
       </span>
       <span className='price'>&#8364; {price}</span>
       <div
         className='remove-button'
-        onClick={() => clearItems(item as Product)}
+        onClick={() => clearItemsFromCart(item, user?.uid)}
       >
         &#10005;
       </div>

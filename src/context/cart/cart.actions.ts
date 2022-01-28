@@ -1,31 +1,36 @@
-import { Product, ProductQty } from '../../api/Product/products.models';
+import { Product } from '../../api/Product/products.models';
+import { CartState } from './cart.reducer';
 import { cartActionTypes } from './cart.types';
 
-interface cartAction_TOGGLE_CART_HIDDEN {
-  type: cartActionTypes.TOGGLE_CART_HIDDEN;
-}
-
+// TODO: check optional values
 interface cartAction_ADD_ITEM {
   type: cartActionTypes.ADD_ITEM;
-  payload: ProductQty;
+  item: Product;
+  quantity?: number;
+  cartState?: CartState;
 }
 interface cartAction_REMOVE_ITEM {
   type: cartActionTypes.REMOVE_ITEM;
-  payload: ProductQty;
+  item: Product;
+  quantity?: number;
+  cartState?: CartState;
 }
 
 interface cartAction_CLEAR_ITEMS {
   type: cartActionTypes.CLEAR_ITEMS;
-  payload: Product;
+  item: Product;
+  quantity?: number;
+  cartState?: CartState;
 }
 
 interface cartAction_SET_ITEMS {
   type: cartActionTypes.SET_ITEMS;
-  payload: ProductQty[];
+  quantity?: number;
+  item?: Product;
+  cartState: CartState;
 }
 
-export type cartAction =
-  | cartAction_TOGGLE_CART_HIDDEN
+export type CartAction =
   | cartAction_ADD_ITEM
   | cartAction_REMOVE_ITEM
   | cartAction_CLEAR_ITEMS

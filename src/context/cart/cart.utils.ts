@@ -1,39 +1,63 @@
-import { ProductQty } from '../../api/Product/products.models';
+import { Product } from '../../api/Product/products.models';
+import { CartItemType, CartState } from './cart.reducer';
 
 export const addItemToCart = (
-  cartItems: ProductQty[],
-  cartItemToAdd: ProductQty
-) => {
-  const existingCartItem = cartItems.find(
-    (cartItem) => cartItem.id === cartItemToAdd.id
-  );
+  cartState: CartState,
+  cartItemToAdd: Product,
+  quantityToAdd = 1
+): CartState => {
+  const existingCartItem = cartState[cartItemToAdd.id];
 
-  if (existingCartItem) {
-    return cartItems.map((cartItem) =>
-      cartItem.id === cartItemToAdd.id
-        ? { ...cartItem, qty: cartItem.qty + 1 }
-        : cartItem
-    );
+  if (existingCartItem !== undefined) {
+    const quantity = existingCartItem.quantity + quantityToAdd;
+    return {
+      ...cartState,
+      [cartItemToAdd.id]: {
+        ...existingCartItem,
+        quantity
+      }
+    };
   }
 
-  return [...cartItems, { ...cartItemToAdd, qty: 1 }];
+  return {
+    ...cartState,
+    [cartItemToAdd.id]: {
+      ...cartItemToAdd,
+      quantity: quantityToAdd
+    }
+  };
 };
 
 export const removeItemFromCart = (
-  cartItems: ProductQty[],
-  cartItemToRemove: ProductQty
-) => {
-  const existingCartItem = cartItems.find(
-    (cartItem) => cartItem.id === cartItemToRemove.id
-  );
+  cartState: CartState,
+  cartItemToRemove: Product,
+  quantityToRemove: number = 1
+): CartState => {
+  const existingCartItem = cartState[cartItemToRemove.id];
+  const quantity = existingCartItem.quantity - quantityToRemove;
 
-  if (existingCartItem?.qty === 1) {
-    return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
-  }
-
-  return cartItems.map((cartItem) =>
-    cartItem.id === cartItemToRemove.id
-      ? { ...cartItem, qty: cartItem.qty - 1 }
-      : cartItem
-  );
+  return {
+    ...cartState,
+    [cartItemToRemove.id]: {
+      ...existingCartItem,
+      quantity
+    }
+  };
 };
+
+export const clearItemsFromCart = (
+  cartState: CartState,
+  cartItemToRemove: Product
+) => {
+  const newCartItems = { ...cartState };
+  delete newCartItems[cartItemToRemove.id];
+  return newCartItems;
+};
+
+export const getCartSubTotal = (sum: number, item: CartItemType): number => {
+  sum += item.price * item.quantity;
+  return sum;
+};
+
+export const getCartCount = (sum: number, item: CartItemType): number =>
+  sum + item.quantity;

@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { useCart } from '../../context/cart/CartContext';
+import { useCartMutations } from '../../context/cart/CartContext';
 import { Product } from '../../api/Product/products.models';
 import FormButton from '../general/FormButton/FormButton';
 
 import './collection-item.styles.scss';
+import { useAuth } from '../../context/AuthContext';
 
 interface CollectionItemProps {
   item: Product;
@@ -12,7 +13,8 @@ interface CollectionItemProps {
 
 const CollectionItem: React.FC<CollectionItemProps> = ({ item }) => {
   const { name, imageUrl, price } = item;
-  const { addItem } = useCart();
+  const { addToCart } = useCartMutations();
+  const { user } = useAuth();
 
   return (
     <div className='collection-item'>
@@ -26,7 +28,7 @@ const CollectionItem: React.FC<CollectionItemProps> = ({ item }) => {
         <span className='name'>{name}</span>
         <span className='price'>{`€${price}`}</span>
       </div>
-      <FormButton onClick={() => addItem(item)} inverted>
+      <FormButton onClick={() => addToCart(item, 1, user?.uid)} inverted>
         Add to cart
       </FormButton>
     </div>
