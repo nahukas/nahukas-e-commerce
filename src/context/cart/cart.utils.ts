@@ -3,15 +3,16 @@ import { CartItemType, CartState } from './cart.reducer';
 
 export const addItemToCart = (
   cartState: CartState,
-  existingCartItem: CartItemType | undefined,
   cartItemToAdd: Product,
   quantityToAdd = 1
-) => {
+): CartState => {
+  const existingCartItem = cartState[cartItemToAdd.id];
+
   if (existingCartItem !== undefined) {
     const quantity = existingCartItem.quantity + quantityToAdd;
     return {
       ...cartState,
-      [item.id]: {
+      [cartItemToAdd.id]: {
         ...existingCartItem,
         quantity
       }
@@ -20,7 +21,7 @@ export const addItemToCart = (
 
   return {
     ...cartState,
-    [item.id]: {
+    [cartItemToAdd.id]: {
       ...cartItemToAdd,
       quantity: quantityToAdd
     }
@@ -30,21 +31,27 @@ export const addItemToCart = (
 export const removeItemFromCart = (
   cartState: CartState,
   cartItemToRemove: Product,
-  quantityToRemove = 1
+  quantityToRemove: number = 1
+): CartState => {
+  const existingCartItem = cartState[cartItemToRemove.id];
+  const quantity = existingCartItem.quantity - quantityToRemove;
+
+  return {
+    ...cartState,
+    [cartItemToRemove.id]: {
+      ...existingCartItem,
+      quantity
+    }
+  };
+};
+
+export const clearItemsFromCart = (
+  cartState: CartState,
+  cartItemToRemove: Product
 ) => {
-  const existingCartItem = cartItems.find(
-    (cartItem) => cartItem.id === cartItemToRemove.id
-  );
-
-  if (existingCartItem?.qty === 1) {
-    return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
-  }
-
-  return cartItems.map((cartItem) =>
-    cartItem.id === cartItemToRemove.id
-      ? { ...cartItem, qty: cartItem.qty - 1 }
-      : cartItem
-  );
+  const newCartItems = { ...cartState };
+  delete newCartItems[cartItemToRemove.id];
+  return newCartItems;
 };
 
 export const getCartSubTotal = (sum: number, item: CartItemType): number => {

@@ -1,28 +1,18 @@
 import React from 'react';
 
-import { ProductQty } from '../../api/Product/products.models';
 import CheckoutItem from '../../components/CheckoutItem/CheckoutItem';
 import { useCart } from '../../context/cart/CartContext';
 
 import './checkout.scss';
 
 const CheckoutPage: React.FC = () => {
-  const {
-    loadingCart,
-    cartState: { cartItems }
-  } = useCart();
+  const { subTotal, items } = useCart();
 
-  const totalCart = cartItems.length
-    ? cartItems.reduce(
-        (prev: number, cartItem: ProductQty) =>
-          prev + cartItem.qty * cartItem.price,
-        0
-      )
-    : 0;
+  const totalCart = subTotal || 0;
 
-  if (loadingCart) {
-    return <h1>Loading...</h1>;
-  }
+  // if (loadingCart) {
+  //   return <h1>Loading...</h1>;
+  // }
 
   return (
     <div className='checkout-page'>
@@ -43,7 +33,7 @@ const CheckoutPage: React.FC = () => {
           <span>Remove</span>
         </div>
       </div>
-      {cartItems.map((cartItem: ProductQty) => (
+      {items.map((cartItem) => (
         <CheckoutItem key={cartItem.id} item={cartItem} />
       ))}
       <div className='total'>

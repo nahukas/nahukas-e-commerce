@@ -26,7 +26,7 @@ const AuthContext = React.createContext<AuthContextType>(null!);
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = React.useState<IUser | null>(null);
   const [userState, dispatch] = useReducer(userReducer, initialState);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserInfo = async (user: User) => {

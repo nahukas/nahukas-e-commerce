@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../asset/crown.svg';
 import { useAuth } from '../../context/AuthContext';
-import { useCart } from '../../context/cart/CartContext';
 import CartDropdown from '../CartDropdown/CartDropDown';
 import CartIcon from '../CartIcon/CartIcon';
 
@@ -28,7 +27,10 @@ const AuthStatus = () => {
 };
 
 const Header: React.FC = () => {
-  const { cartState } = useCart();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const toggleCart = () => {
+    setDropdownVisible((prevState) => !prevState);
+  };
 
   return (
     <div className='header'>
@@ -43,9 +45,9 @@ const Header: React.FC = () => {
           CONTACT
         </Link>
         <AuthStatus />
-        <CartIcon />
+        <CartIcon toggleCart={toggleCart} />
       </div>
-      {!cartState.hidden && <CartDropdown />}
+      {dropdownVisible && <CartDropdown toggleCart={toggleCart} />}
     </div>
   );
 };
