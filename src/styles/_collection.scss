@@ -1,0 +1,66 @@
+.collection {
+  text-align: center;
+
+  &__grid {
+    @include breakpoint-up(medium) {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(8, 320px);
+      grid-gap: 15px;
+    }
+
+    @include breakpoint-down(medium) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(8, 400px);
+      grid-gap: 15px;
+    }
+  }
+
+  &__item {
+    margin: 10px;
+    height: 300px;
+    padding: 10px;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .collection-footer {
+      width: 100%;
+      height: 5%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+
+      .name {
+        width: 80%;
+        margin-bottom: 15px;
+      }
+
+      .price {
+        width: 20%;
+      }
+    }
+
+    button {
+      display: none;
+    }
+
+    &:hover {
+      img {
+        opacity: 0.8;
+      }
+
+      button {
+        display: flex;
+        position: absolute;
+        cursor: pointer;
+        bottom: 10px;
+      }
+    }
+  }
+}

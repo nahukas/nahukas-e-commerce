@@ -4,6 +4,7 @@ import { DIRECTORY } from '../../api/Directory/enums';
 
 import { Product } from '../../api/Product/products.models';
 import { ProductService } from '../../api/Product/ProductsService';
+import Collection from '../../components/Collection/Collection';
 
 const SectionPage: FC = () => {
   const params = useParams();
@@ -42,13 +43,7 @@ const SectionPage: FC = () => {
     return <h1>Loading...</h1>;
   }
 
-  return (
-    <>
-      {products.map((product: Product) => (
-        <h1 key={product.id}>{product.name}</h1>
-      ))}
-    </>
-  );
+  return <Collection items={products} />;
 };
 
 export default SectionPage;
